@@ -1,0 +1,18 @@
+{% extends 'layouts/halfmoon.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+    <h4>Anda telah berhasil Log out</h4>
+
+    <p>
+        Terimakasih sudah menggunakan aplikasi ini :)
+    </p>
+
+    <p>
+        <a href="{% url 'accounts:login' %}">Log in Kembali</a>
+    </p>
+        <a href="/">Kambali ke Landing Page</a>
+
+{% endblock %}

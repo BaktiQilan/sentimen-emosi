@@ -1,0 +1,28 @@
+{% extends 'layouts/default/base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="content">
+    <h2 class="content-title">
+        Profile
+    </h2>
+    <div>
+        <strong>Username</strong>
+        <br />
+        {{ request.user.username }}
+    </div>
+    <hr />
+    <div>
+        <strong>Email</strong>
+        <br />
+        {{ request.user.email }}
+    </div>
+    <hr />
+    <div>
+        <strong>Full Name</strong>
+        <br />
+        {{ request.user.first_name }} {{ request.user.last_name }}
+    </div>
+</div>
+{% endblock %}

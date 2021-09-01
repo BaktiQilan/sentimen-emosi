@@ -1,0 +1,62 @@
+{% extends 'layouts/default/base.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="content w-full">
+  <h1 class="content-title font-size-22"> <!-- font-size-22 = font-size: 2.2rem (22px) -->
+    Page Modeling under process
+  </h1>
+    <div class="container-fluid">
+        <div class="card">
+            <h2 class="card-title">
+                Slang Dictionary Available
+            </h2>
+
+            <div class="overflow-y-hidden overflow-y-md-auto w-full h-300"> <!-- w-250 = width: 25rem (250px), h-200 = height: 20rem (200px) -->
+                <div class="h-350"> <!-- h-250 = height: 25rem (250px) -->
+                    <table class="table table-no-outer-padding">
+                        <thead>
+                            <tr>
+                            <th>Pesan</th>
+                            <th>Label</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for w in dictionary %}
+                            <tr>
+                            <td>{{ w.word}}</td>
+                            <td>{{ w.transform}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <h2 class="card-title">
+                Example Card
+            </h2>
+            {% comment %} <form action="..." method="...">
+                <!-- First row -->
+                <div class="form-row row-eq-spacing-sm">
+                    <div class="col-lg">
+                    <label for="pesan" class="required">Pesan</label>
+                    <input type="text" class="form-control" id="pesan" placeholder="Pesan" required="required">
+                    </div>
+                    <div class="col-lg">
+                    <label for="label" class="required">Label</label>
+                    <input type="text" class="form-control" id="label" placeholder="Label" required="required">
+                    </div>
+                </div>
+                <div class="text-right"> <!-- text-right = text-align: right -->
+                    <input class="btn btn-primary" type="submit" value="Submit">    
+                </div>
+            </form> {% endcomment %}
+        </div>
+    </div>
+</div>
+{% endblock %}

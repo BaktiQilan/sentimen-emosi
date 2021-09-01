@@ -1,0 +1,84 @@
+{% extends 'layouts/default/base.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="content">
+  <h1 class="content-title font-size-22"> <!-- font-size-22 = font-size: 2.2rem (22px) -->
+    Guide atau Panduan untuk Menu Modeling
+  </h1>
+    <div class="container-fluid">
+    <!-- First row -->
+        <div class="row row-eq-spacing">
+        <div class="col-lg">
+            <div class="card">
+            <h2 class="card-title">Alur Proses pada Menu Modeling</h2>
+                <div class="card-body">
+                    <img src="{% static 'img/guide/alur.png' %}" class="img-fluid rounded" alt="rounded image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Second row -->
+    <div class="row row-eq-spacing">
+        <div class="col-lg">
+            <div class="card">
+            <h2 class="card-title">Pertama, Get New Data</h2>
+                <div class="card-body">
+                    <img src="{% static 'img/guide/1.png' %}" class="img-fluid rounded" alt="rounded image">
+                    <p>Deskripsi:</p>
+                    <p>1. Tombol untuk mendapatkan data dari Iteung</p>
+                    <p>2. Tombol untuk mendapatkan data dari Twitter. tetapi harus disertai dengan memasukan keyword atau kata kunci. </p>
+                    <p>3. Tombol untuk mendapatkan data dari file yang diupload. *Catatan: file harus berupa txt hasil dari export WhatsApp.</p>
+                    <p>4. Tombol untuk menampilkan modal yang berisis step-by-step cara export history chat WhatsApp.</p>
+                    <p>5. Table yang akan menampilkan data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Third row -->
+    <div class="row row-eq-spacing">
+        <div class="col-lg">
+            <div class="card">
+            <h2 class="card-title">Kedia, Implementasi Kamus Slang</h2>
+                <div class="card-body">
+                    <img src="{% static 'img/guide/2.png' %}" class="img-fluid rounded" alt="rounded image">
+                    <p>Diskripsi:</p>
+                    <p>1. Tombol untuk implementasi kamus slang.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fourth row -->
+    <div class="row row-eq-spacing">
+        <div class="col-lg">
+            <div class="card">
+            <h2 class="card-title">Ketiga, Implementasi Preprocessing</h2>
+                <div class="card-body">
+                    <img src="{% static 'img/guide/3.png' %}" class="img-fluid rounded" alt="rounded image">
+                    <p>Deskripsi:</p>
+                    <p>1. Tombol untuk implementasi preprocessing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fifth row -->
+    <div class="row row-eq-spacing">
+        <div class="col-lg">
+            <div class="card">
+            <h2 class="card-title">Keempat,implementasi Prediksi</h2>
+                <div class="card-body">
+                    <img src="{% static 'img/guide/4.png' %}" class="img-fluid rounded" alt="rounded image">
+                    <p>Deskripsi:</p>
+                    <p>1. Tombol untuk implementasi prediksi</p>
+                    <p>2. Tabel yang akan menampilkan data, beserta label yang sudah diprediksi.</p>
+                    <p>3. Dropdown yang berisi label yang sudah diprediksi dapat dikoreksi jika salah.</p>
+                    <p>4. Tombol untuk memasukan data kedalam dataset pada database dan akan langsung melakukan training dan testing ulang pada model.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

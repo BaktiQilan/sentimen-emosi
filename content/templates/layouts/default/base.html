@@ -1,0 +1,299 @@
+{% load static %}
+{% load bootstrap4 %}
+
+{% load i18n %}
+
+{% get_current_language as language_code %}
+<!DOCTYPE html>
+<html lang="{{ language_code }}">
+  <head>
+    <!-- Meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Favicon and title -->
+    <link rel="icon" href="{% static 'halfmoon/favicon2.ico' %}">
+    <title>SEMI - Sentimen Emoisi</title>
+
+    <!-- Halfmoon CSS -->
+    <link href="{% static 'halfmoon/css/halfmoon-variables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'halfmoon/fontawesome/all.css' %}" rel="stylesheet">
+    <script src="{% static 'chartjs/js/chart.min.js' %}"></script>
+
+    
+    
+    
+    <!--
+      Or,
+      Use the following (no variables, supports IE11):
+      <link href="css/halfmoon.min.css" rel="stylesheet" />
+    -->
+  </head>
+  <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-sidebar-shortcut-enabled="true" data-set-preferred-theme-onload="true">
+    <!-- Modals go here -->
+    <!-- Reference: https://www.gethalfmoon.com/docs/modal -->
+
+    <!-- Page wrapper start -->
+    <div class="page-wrapper with-sidebar with-navbar" data-sidebar-type="overlayed-sm-and-down">
+      
+      <!-- Sticky alerts (toasts), empty container -->
+      <!-- Reference: https://www.gethalfmoon.com/docs/sticky-alerts-toasts -->
+ 
+      <div class="sticky-alerts">
+        {% bootstrap_messages %}
+      </div>
+
+        <!-- Modal -->
+          <!-- Modal-export-file-whatsapp -->
+          <div class="modal" id="modal-1" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <a href="#" class="close" role="button" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </a>
+                <h5 class="modal-title">How to Export History Chat From WhatsApp</h5>
+                <img src="{% static 'img/file_wa.gif' %}" class="img-fluid" alt="responsive image">
+                <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+                  <a href="#" class="btn mr-5" role="button">Close</a>
+                  <a href="#" class="btn btn-primary" role="button">I understand</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal-keterangan -->
+          <div class="modal" id="modal-2" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content w-600">
+                <a href="#" class="close" role="button" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </a>
+                <h5 class="modal-title">Keterangan:</h5>
+                <p>- ACC (Accuracy) ialah Persentase classifier benar melakukan prediksi</p>
+                <p>- FP (False Positif) ialah Data negatif diprediksi positif</p>
+                <p>- PPV (Prevalence) ialah Persentase jumlah instance positif data</p>
+                <p>- ERR (Error Rate) ialah Persentase classifier salah melakukan prediksi</p>
+                <p>- TNR (True Negatif Rate/Specificity) ialah Presentase data negatif diprediksi negatif</p>
+                <p>- PRE (Precision) ialah Persentase prediksi data sebagai positif yang benar</p>
+                <p>- TPR (True Positif Rate/Recall) ialah Persentase data positif diprediksi positif</p>
+                <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+                  <a href="#" class="btn mr-5" role="button">Ok</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+              <!-- Navbar start -->
+          <nav class="navbar">
+            <!-- Reference: https://www.gethalfmoon.com/docs/navbar -->
+            <div class="navbar-content">
+            <button class="btn btn-action" type="button" onclick="halfmoon.toggleSidebar()">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Toggle sidebar</span> <!-- sr-only = show only on screen readers -->
+              </button>
+            </div>
+            <!-- Navbar brand -->
+            <a href="{% url 'dashboard:dashboard' %}" class="navbar-brand">
+
+            </a>
+            <!-- Navbar text -->
+            <span class="navbar-text text-monospace">SEMI</span> <!-- text-monospace = font-family shifted to monospace -->
+            <!-- Navbar dropdown -->
+            <div class="dropdown with-arrow d-none d-md-flex ml-auto">
+              <button class="btn btn-light mr-5" type="button" onclick="halfmoon.toggleDarkMode()"><i class="far fa-moon"></i></button>
+              <button class="btn" data-toggle="dropdown" type="button" id="..." aria-haspopup="true" aria-expanded="false">
+                {{ request.user.username }} <i class="fa fa-angle-down" aria-hidden="true"></i><!-- ml-5 = margin-left: 0.5rem (5px) -->
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="...">
+                <a class="dropdown-item" href="{% url 'accounts:see_profile' %}">{% trans 'Profile' %}</a>
+                <a class="dropdown-item" href="{% url 'accounts:log_out' %}">{% trans 'Log out' %}</a>
+              </div>
+              
+            </div>
+            <!-- Navbar content (with the dropdown menu) -->
+            <div class="navbar-content d-md-none ml-auto"> <!-- d-md-none = display: none on medium screens and up (width > 768px), ml-auto = margin-left: auto -->
+              <div class="dropdown with-arrow">
+                <button class="btn" data-toggle="dropdown" type="button" id="...">
+                  {{ request.user.username }}
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right w-200" aria-labelledby="..."> <!-- w-200 = width: 20rem (200px) -->
+                  <a class="dropdown-item" href="{% url 'accounts:change_profile' %}">{% trans 'Change profile' %}</a>
+                  <a class="dropdown-item" href="{% url 'accounts:log_out' %}">{% trans 'Log out' %}</a>
+                </div>
+                <button class="btn btn-light ml-5" type="button" onclick="halfmoon.toggleDarkMode()"><i class="far fa-moon"></i></button>
+              </div>
+            </div>
+          </nav>
+          <!-- Navbar end -->
+
+      <!-- Sidebar overlay -->
+      <div class="sidebar-overlay" onclick="halfmoon.toggleSidebar()"></div>
+
+      <!-- Sidebar start -->
+      <div class="sidebar">
+        <div class="sidebar-menu">
+          <!-- Sidebar links (with icons) and titles -->
+          <h5 class="sidebar-title">Menu</h5>
+          
+          <div class="sidebar-divider"></div>
+          <a href="{% url 'dashboard:dashboard' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+            </span>
+            Dashboard
+          </a>
+          <a href="{% url 'dashboard:guide' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fab fa-guilded" aria-hidden="true"></i>
+            </span>
+            {% trans 'Guide' %}
+          </a>
+          <a href="{% url 'dashboard:modeling' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fa fa-terminal" aria-hidden="true"></i>
+            </span>
+            Modeling
+          </a>
+          <a href="{% url 'dashboard:predict' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fas fa-bolt" aria-hidden="true"></i>
+            </span>
+            Predict Sentences
+          </a>
+
+          {% comment %} <a href="{% url 'dashboard:slang' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fas fa-spell-check" aria-hidden="true"></i>
+            </span>
+            Slang Dictionary
+          </a> {% endcomment %}
+          <br />
+          <h5 class="sidebar-title">User Setting</h5>
+          <div class="sidebar-divider"></div>
+          <a href="{% url 'accounts:change_profile' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fas fa-user-edit" aria-hidden="true"></i>
+            </span>
+            Change Name
+          </a>
+          <a href="{% url 'accounts:change_email' %}" class="sidebar-link sidebar-link-with-icon" >
+            <span class="sidebar-icon">
+              <i class="fas fa-edit" aria-hidden="true"></i>
+            </span>
+            Change Email
+          </a>
+          <a href="{% url 'accounts:change_password' %}" class="sidebar-link sidebar-link-with-icon">
+            <span class="sidebar-icon">
+              <i class="fas fa-key" aria-hidden="true"></i>
+            </span>
+            Change Password
+          </a>
+          <br />
+          <div class="sidebar-divider"></div>
+          <br />
+          <div class="d-flex justify-content-center">
+          <a href="{% url 'accounts:log_out' %}" class="btn btn-square rounded-circle" role="button">
+            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          </a>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar end -->
+
+      <!-- Content wrapper start -->
+      <div class="content-wrapper">
+        <div class="container-fluid">
+          <div class="w-full h-full d-flex">
+                  {% block content %}
+            {% comment %} <div class="content">
+                      No content.
+            </div> {% endcomment %}
+                  {% endblock %}
+            
+          </div>
+        </div>
+      </div>
+      <!-- Content wrapper end -->
+    </div>
+    <!-- Page wrapper end -->
+
+    <!-- Halfmoon JS -->
+    <script src="{% static 'halfmoon/js/halfmoon.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    
+
+
+    <script type="text/javascript">
+      $(function() {
+        $('.sidebar-link').click(function() {
+          $('.sidebar-link').not(this).removeClass('active')
+          $(this).toggleClass('active')
+        })
+      })
+    </script>
+    <script type="text/javascript">
+      // Toasts a default alert
+      function toastAlert() {
+        var alertContent = "This is a default alert with <a href='#' class='alert-link'>a link</a> being toasted.";
+        // Built-in function
+        halfmoon.initStickyAlert({
+          content: alertContent,      // Required, main content of the alert, type: string (can contain HTML)
+          title: "Default alert"      // Optional, title of the alert, default: "", type: string
+        })
+      }
+    </script>
+
+
+  </body>
+
+  
+
+  {% comment %} modal {% endcomment %}
+  {% for pr in prediksi %}
+    <div class="modal" id="modal-{{pr.id}}" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content w-half">
+          <button class="close" data-dismiss="modal" type="button" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Modal title</h5>
+            <form >
+              <div class="row row-eq-spacing-lg">
+                <div class="col-lg-8">
+                  <div class="card h-lg-250 overflow-y-lg-auto"> <!-- h-lg-250 = height = 25rem (250px) only on large screens and up (> 992px), overflow-y-lg-auto = overflow-y: auto only on large screens and up (> 992px) -->
+                    <textarea class="form-control" readonly="readonly">{{pr.pesan}}
+                    </textarea>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="card"> <!-- h-lg-250 = height = 25rem (250px) only on large screens and up (> 992px), overflow-y-lg-auto = overflow-y: auto only on large screens and up (> 992px) -->
+                  <select class="form-control" id="label" required="required">
+                    <option value="{{pr.label}}" selected="selected" disabled="disabled">{{pr.label}}</option>
+                    <option value="marah">marah</option>
+                    <option value="senang">senang</option>
+                    <option value="sedih">sedih</option>
+                    <option value="takut">takut</option>
+                    <option value="percaya">percaya</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+                          
+              {% comment %} <input type="text" class="form-control" placeholder="{{pr.pesan}}" id="if-1-username" disabled> {% endcomment %}
+
+            </form>
+          <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+            <button class="btn mr-5" data-dismiss="modal" type="button">Close</button>
+            <button class="btn btn-primary" data-dismiss="modal" type="button">I understand</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  
+
+
+</html>

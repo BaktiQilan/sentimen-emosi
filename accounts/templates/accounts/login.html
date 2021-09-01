@@ -1,0 +1,39 @@
+{% extends 'layouts/halfmoon.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+    <div>
+    <h2 class="card-title text-center">
+        {% trans 'Log in' %}
+    </h2>
+    </div>
+
+    <form method="post" class="w-500 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        <button class="btn btn-primary btn-rounded">{% trans 'Log in' %}</button>
+        
+    </form>
+
+    <hr>
+
+    <ul>
+        <li>
+            <a href="{% url 'accounts:restore_password' %}">Lupa password?</a>
+        </li>   
+        <li>
+            <a href="{% url 'accounts:remind_username' %}">Lupa username?</a>
+        </li>
+        <li>
+            <a href="{% url 'accounts:resend_activation_code' %}">Kirim kembali kode aktifasi</a>
+        </li>
+        <li>
+            <a href="{% url 'accounts:sign_up' %}">Belum punya akun? Sign up sekarang!</a>
+        </li>
+    </ul>
+    <a href="/">Kambali ke Landing Page</a>
+ 
+{% endblock %}

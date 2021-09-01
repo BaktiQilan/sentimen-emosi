@@ -1,0 +1,159 @@
+{% extends 'layouts/default/base.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="content w-full">
+  <h1 class="content-title font-size-22"> <!-- font-size-22 = font-size: 2.2rem (22px) -->
+    Page Modeling
+  </h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="position-absolute top-0 right-0 z-10 p-10"> <!-- position-absolute = position: absolute, top-0 = top: 0, right-0 = right: 0, z-10 = z-index: 10, p-10 = padding: 1rem (10px) -->
+                <a href="#modal-1" class="btn btn-light" role="button">Cara mendapatkan File</a>
+            </div>
+            <h2 class="card-title">
+                1 - Get New Data
+            </h2>
+            <form method="POST" class="form-inline">
+                <label for="get">Get Data From Iteung :</label>
+                 {% csrf_token %}
+                <input type="submit" class="btn btn-primary" value="get" name="get">
+            </form>
+            <br>
+            <div class="w-three-quarter">
+                <form method="POST" class="form-inline">
+                    <label  for="keyword">Get Data From Twitter :</label>
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Keyword:</span>
+                        </div>
+                        <input type="text" class="form-control" id="keyword" name="keyword" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="scrap" name="scrap">
+                </form>
+            </div>
+            <br>
+            <form method="POST" class="form-inline" enctype="multipart/form-data">
+                <label  for="watxt">Get Data By Upload File (Export from WhatsApp) :</label>
+            <div class="custom-control">
+                    {% csrf_token %}
+                <div class="custom-file">
+                    <input type="file" id="watxt" name='watxt' accept=".txt" required>
+                    <label for="watxt">Upload File txt</label>
+                </div>
+            </div>
+                    <input type="submit" class="btn btn-primary" value="Upload">
+            </form>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th class="text-center">Pesan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for show in show_data %}
+                    <tr>
+                        <td class="text-center">{{ show.pesan }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        </div>
+        <div class="card">
+            <h2 class="card-title">
+                2 - Implementasi Kamus Slang
+            </h2>
+            <form method="POST">
+                 {% csrf_token %}
+                <input type="submit" class="btn btn-primary" value="slang" name="slang">
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th class="text-center">Pesan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for s in slang %}
+                    <tr>
+                        <td class="text-center">{{ s.pesan }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        </div>
+        <div class="card">
+            <h2 class="card-title">
+                3 - Implementasi Preprocessing
+            </h2>
+            <form method="POST">
+                 {% csrf_token %}
+                <input type="submit" class="btn btn-primary" value="preprocess" name="preprocess">
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th class="text-center">Pesan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for p in prepro %}
+                    <tr>
+                        <td class="text-center">{{ p.pesan }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h2 class="card-title">
+                4 - Implementasi Prediksi
+            </h2>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary" value="prediksi" name="prediksi">
+            </form>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th class="text-center">Pesan</th>
+                        <th class="text-center">Label</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <form method="POST">
+                    {% for pr in prediksi %}
+                        <tr>
+                            <td class="text-center w-three-quarter">
+                            {{ pr.pesan }}
+                            {% comment %} <input type="hidden" id="pesan-{{pr.id}}" name="pesan-{{pr.id}}" class="form-control" value="{{ pr.pesan }}" readonly="readonly"> {% endcomment %}
+                            </td>
+                            <td class="text-center">
+                                <select class="form-control" name="label" id="label" required="required">
+                                    <option value="{{pr.label}}" selected="selected">{{pr.label}}</option>
+                                    <option value="marah" >marah</option>
+                                    <option value="senang">senang</option>
+                                    <option value="sedih">sedih</option>
+                                    <option value="takut">takut</option>
+                                    <option value="percaya">percaya</option>
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+                <input type="submit" class="btn btn-primary" name="hasil">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
